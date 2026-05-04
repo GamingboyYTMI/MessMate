@@ -1,0 +1,11 @@
+{
+  "name": "MessMate",
+  "description": "Full-stack mess and canteen management app with student portals, owner dashboards, and administrative oversight.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "firebase"
+  ]
+}

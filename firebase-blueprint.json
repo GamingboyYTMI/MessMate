@@ -1,0 +1,99 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and association",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["Admin", "MessOwner", "Student"] },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "username": { "type": "string" },
+        "messId": { "type": "string", "description": "Reference to joined mess" }
+      },
+      "required": ["uid", "role", "status"]
+    },
+    "Mess": {
+      "title": "Mess",
+      "description": "Mess or canteen details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "upiId": { "type": "string" },
+        "upiQrUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved"] }
+      },
+      "required": ["ownerId", "name", "status"]
+    },
+    "Menu": {
+      "title": "Menu",
+      "description": "Daily meal routine",
+      "type": "object",
+      "properties": {
+        "messId": { "type": "string" },
+        "day": { "type": "string" },
+        "breakfast": { "type": "string" },
+        "lunch": { "type": "string" },
+        "dinner": { "type": "string" }
+      },
+      "required": ["messId", "day"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Meal attendance record",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "messId": { "type": "string" },
+        "date": { "type": "string" },
+        "mealType": { "type": "string", "enum": ["breakfast", "lunch", "dinner"] },
+        "status": { "type": "string", "enum": ["present", "absent"] }
+      },
+      "required": ["studentId", "messId", "date", "mealType"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Student payment record",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "messId": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "month": { "type": "string" },
+        "year": { "type": "number" },
+        "status": { "type": "string", "enum": ["paid", "pending"] },
+        "receiptUrl": { "type": "string" }
+      },
+      "required": ["studentId", "messId", "amount", "month", "year"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/messes/{messId}": {
+      "schema": "Mess",
+      "description": "Mess registrations"
+    },
+    "/messes/{messId}/menus/{menuId}": {
+      "schema": "Menu",
+      "description": "Menu for a mess"
+    },
+    "/messes/{messId}/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Attendance tracking"
+    },
+    "/messes/{messId}/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "Payment records"
+    }
+  }
+}
